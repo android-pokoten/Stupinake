@@ -86,7 +86,7 @@
      USBSerial.begin(115200);
  
      Lcd.init();
-     Lcd.setRotation(2);
+     //Lcd.setRotation(2);
      Screen.createSprite(Lcd.width(), Lcd.height());
     
      while (!joystick.begin(&Wire, ATOM_JOYSTICK_ADDR, 38, 39, 400000U)) {
@@ -145,13 +145,13 @@
     joy1_y = joystick.getJoy1ADCValueY(_12bit);
     //USBSerial.printf("x: %d\n", joy1_x);
     if (joy1_y > 2500)
-        MoveDirection = MOVE_UP;
-    else if (joy1_y < 1500)
         MoveDirection = MOVE_DOWN;
+    else if (joy1_y < 1500)
+        MoveDirection = MOVE_UP;
     else if (joy1_x < 1500)
-        MoveDirection = MOVE_RIGHT;
-    else if (joy1_x > 2500)
         MoveDirection = MOVE_LEFT;
+    else if (joy1_x > 2500)
+        MoveDirection = MOVE_RIGHT;
 
     //USBSerial.print(MoveDirection);
  }
@@ -467,14 +467,16 @@
  {   
      /* Draw score */
      char TextBuff[10];
-     Screen.setFont(&fonts::Font8x8C64);
+     //Screen.setFont(&fonts::Font8x8C64);
+     Screen.setTextFont(7);
      Screen.setTextDatum(top_center);
-     Screen.setTextSize(Screen.width() / 20);
+     //Screen.setTextSize(Screen.width() / 20);
+     Screen.setTextSize(2);
      snprintf(TextBuff, sizeof(TextBuff), "%d", Game_Score);
      Screen.setTextColor(COLOR_BG_DIALOG_SHADOW, TFT_BLACK);
-     Screen.drawCenterString(TextBuff, Screen.width() / 2 - 4, (Screen.height() / 2) - Screen.getTextSizeY() * 4);
+     Screen.drawCenterString(TextBuff, Screen.width() / 2 - 1, (Screen.height() / 2) - Screen.getTextSizeY() * 12);
      Screen.setTextColor(COLOR_BG_GRID, TFT_BLACK);
-     Screen.drawCenterString(TextBuff, Screen.width() / 2 - 8, (Screen.height() / 2) - Screen.getTextSizeY() * 4);
+     Screen.drawCenterString(TextBuff, Screen.width() / 2 - 5, (Screen.height() / 2) - Screen.getTextSizeY() * 12);
  
      /* Draw grid */
      for (int x = -(SNAKE_BODY_WIDTH / 2) - 1; x < Screen.width(); x += SNAKE_BODY_WIDTH)
